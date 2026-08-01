@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { motion} from 'motion/react';
 import {
   CheckCircle,
@@ -45,3 +44,4 @@ const Metrics = () => {
     </section>
   );
 };
+export default Metrics;

@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import {
   Star,
-  User,
   Briefcase,
   Home,
   Wrench,
