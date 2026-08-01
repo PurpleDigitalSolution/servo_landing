@@ -1,25 +1,4 @@
-import {
-  Menu,
-  X,
-  ArrowRight,
-  CheckCircle,
-  Star,
-  Phone,
-  MapPin,
-  Shield,
-  Truck,
-  Zap,
-  Fuel,
-  Droplets,
-  Flame,
-  CreditCard,
-  Users,
-  Building,
-  ChevronDown,
-  ChevronUp,
-  Play,
-  Apple,
-} from "lucide-react";
+
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Services from "../components/Service";
@@ -29,6 +8,7 @@ import MobileApp from "../components/AppPreview";
 import ForBusiness from "../components/ForBusiness";
 import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
+import { Fuel } from "lucide-react";
 
 const Footer = () => {
   return (

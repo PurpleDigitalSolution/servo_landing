@@ -1,13 +1,7 @@
-import React from "react";
+
 import { motion } from "motion/react";
 import {
   Smartphone,
-  Fuel,
-  Truck,
-  CheckCircle,
-  CreditCard,
-  Zap,
-  Clock,
 } from "lucide-react";
 
 // Apple SVG Icon
@@ -89,7 +83,7 @@ const Download = () => {
           </motion.a>
         </motion.div>
 
-       
+
       </div>
     </div>
   );
