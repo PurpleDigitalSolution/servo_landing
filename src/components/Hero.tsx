@@ -1,12 +1,48 @@
 // Hero.tsx
-import { motion } from "motion/react";
-import { CheckCircle, Star, Zap, Smartphone, Fuel, Truck } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { ChevronLeft, ChevronRight, Star, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DownloadButton from "./DownloadButton";
 
+const previewSlides = [
+  {
+    src: "/images/previews/ss-portrait.png",
+    alt: "Servo app home screen in portrait orientation",
+    label: "Find nearby stations",
+  },
+  {
+    src: "/images/previews/s-portrait.png",
+    alt: "Servo app splash screen in portrait orientation",
+    label: "A smoother fuel run",
+  },
+];
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = window.setInterval(() => {
+      setActiveSlide((currentSlide) => (currentSlide + 1) % previewSlides.length);
+    }, 4500);
+
+    return () => window.clearInterval(interval);
+  }, [isPaused]);
+
+  const showPreviousSlide = () => {
+    setActiveSlide(
+      (currentSlide) => (currentSlide - 1 + previewSlides.length) % previewSlides.length,
+    );
+  };
+
+  const showNextSlide = () => {
+    setActiveSlide((currentSlide) => (currentSlide + 1) % previewSlides.length);
+  };
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden px-4 sm:px-6 lg:px-10 pt-16 sm:pt-0">
       {/* Background Gradient */}
@@ -96,115 +132,60 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative flex justify-center mt-8 lg:mt-0"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="relative aspect-[9/16] max-w-[220px] sm:max-w-[240px] md:max-w-[260px] lg:max-w-[280px] w-full">
-              {/* Phone Frame */}
-              <div className="w-full h-full bg-gradient-to-b from-primary to-accent rounded-3xl p-4 shadow-2xl">
-                <div className="bg-white dark:bg-surface-dark rounded-2xl h-full p-3 sm:p-4 flex flex-col">
-                  {/* App Header */}
-                  <div className="flex items-center justify-between mb-2 sm:mb-3">
-                    <div className="flex items-center gap-1.5 sm:gap-2">
-                      <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Fuel className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" />
-                      </div>
-                      <span className="text-xs sm:text-sm font-bold text-text-primary dark:text-text-primary-dark">
-                        Servo
-                      </span>
-                    </div>
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 rounded-full bg-text-secondary" />
-                      <div className="w-1 h-1 rounded-full bg-text-secondary" />
-                      <div className="w-1 h-1 rounded-full bg-text-secondary" />
-                    </div>
-                  </div>
+            <div className="relative w-full max-w-xl">
+              <div className="absolute inset-x-10 top-10 bottom-8 rounded-full bg-primary/15 blur-3xl" />
+              <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[2rem] border border-white/70 bg-white/45 p-4 shadow-2xl shadow-primary/10 backdrop-blur-sm sm:p-8 dark:border-white/10 dark:bg-surface-dark/40">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={previewSlides[activeSlide].src}
+                    src={previewSlides[activeSlide].src}
+                    alt={previewSlides[activeSlide].alt}
+                    initial={{ opacity: 0, scale: 0.96, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, y: -12 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="h-full w-full object-contain"
+                  />
+                </AnimatePresence>
 
-                  {/* App Content */}
-                  <div className="flex-1 space-y-2 sm:space-y-3">
-                    {/* Search Bar */}
-                    <div className="h-6 sm:h-7 w-full bg-surface-secondary rounded-lg flex items-center px-2 sm:px-3">
-                      <div className="w-2 h-2 rounded-full bg-text-secondary/30" />
-                      <div className="ml-1.5 sm:ml-2 h-1.5 w-12 sm:w-16 bg-text-secondary/20 rounded" />
-                    </div>
+                <button
+                  type="button"
+                  aria-label="Previous app preview"
+                  onClick={showPreviousSlide}
+                  className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/85 text-text-primary shadow-lg transition-transform hover:scale-105 dark:border-white/10 dark:bg-surface-dark/85 dark:text-white"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next app preview"
+                  onClick={showNextSlide}
+                  className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/85 text-text-primary shadow-lg transition-transform hover:scale-105 dark:border-white/10 dark:bg-surface-dark/85 dark:text-white"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
 
-                    {/* Order Card */}
-                    <div className="bg-primary/5 rounded-lg p-2 sm:p-3">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="h-1.5 sm:h-2 w-12 sm:w-16 bg-text-secondary/20 rounded" />
-                          <div className="h-2 sm:h-2.5 w-16 sm:w-24 bg-text-secondary/30 rounded mt-0.5 sm:mt-1" />
-                        </div>
-                        <div className="h-4 sm:h-5 w-10 sm:w-14 bg-primary rounded-lg" />
-                      </div>
-                    </div>
-
-                    {/* Fuel Options */}
-                    <div className="flex gap-1.5 sm:gap-2">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="flex-1 h-8 sm:h-10 bg-surface-secondary rounded-lg" />
-                      ))}
-                    </div>
-
-                    {/* Order Button */}
-                    <DownloadButton
-                      size="sm"
-                      variant="primary"
-                      className="w-full justify-center"
-                    >
-                      Order Now
-                    </DownloadButton>
-                  </div>
-
-                  {/* Bottom Navigation */}
-                  <div className="flex justify-around pt-2 sm:pt-3 border-t border-border dark:border-border-dark">
-                    <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary" />
-                    <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary/20" />
-                    <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary/20" />
-                    <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary/20" />
-                  </div>
+                <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/80 px-3 py-2 shadow-md backdrop-blur-sm dark:bg-surface-dark/80">
+                  {previewSlides.map((slide, index) => (
+                    <button
+                      key={slide.src}
+                      type="button"
+                      aria-label={`Show preview ${index + 1}: ${slide.label}`}
+                      aria-current={activeSlide === index}
+                      onClick={() => setActiveSlide(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        activeSlide === index ? "w-6 bg-primary" : "w-2 bg-text-secondary/30"
+                      }`}
+                    />
+                  ))}
                 </div>
               </div>
-
-              {/* Floating Badge - Top Right */}
-              <motion.div
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-                className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 bg-green-100 dark:bg-green-900/30 rounded-xl shadow-lg px-2 py-1 sm:px-3 sm:py-1.5 border border-green-200 dark:border-green-800"
-              >
-                <div className="flex items-center gap-1 sm:gap-1.5">
-                  <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-green-600 dark:text-green-400" />
-                  <span className="text-[8px] sm:text-[10px] font-semibold text-green-700 dark:text-green-300">
-                    Available
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Floating Badge - Bottom Left */}
-              <motion.div
-                animate={{ y: [0, 5, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-                className="absolute -bottom-2 -left-2 sm:-bottom-3 sm:-left-3 bg-white dark:bg-surface-dark rounded-xl shadow-lg px-2 py-1 sm:px-3 sm:py-1.5 border border-border dark:border-border-dark"
-              >
-                <div className="flex items-center gap-1 sm:gap-1.5">
-                  <Smartphone className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
-                  <span className="text-[8px] sm:text-[10px] font-semibold text-text-primary dark:text-text-primary-dark">
-                    Order Now
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Delivery Truck Badge - Bottom Right */}
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-                className="absolute bottom-1/3 -right-2 sm:bottom-1/3 sm:-right-3 bg-white dark:bg-surface-dark rounded-xl shadow-lg px-2 py-1 sm:px-3 sm:py-1.5 border border-border dark:border-border-dark hidden sm:block"
-              >
-                <div className="flex items-center gap-1 sm:gap-1.5">
-                  <Truck className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
-                  <span className="text-[8px] sm:text-[10px] font-semibold text-text-primary dark:text-text-primary-dark">
-                    Fast Delivery
-                  </span>
-                </div>
-              </motion.div>
+              <p className="mt-4 text-center text-sm font-medium text-text-secondary dark:text-text-secondary-dark">
+                {previewSlides[activeSlide].label}
+              </p>
             </div>
           </motion.div>
         </div>
