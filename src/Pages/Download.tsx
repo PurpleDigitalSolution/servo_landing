@@ -5,7 +5,7 @@ import DownloadButton from "../components/DownloadButton";
 
 const DownloadPage = () => {
   const handleDownloadClick = () => {
-    window.open("https://mega.nz/file/X4hSDA7J#7gvPVwpY0HzAgQvnii6LskKawJ3pL36YpjKmHGWVKDA", "_blank");
+    window.open("https://mega.nz/file/akpxlKxA#34KmwQlWTWfEC99k7WfFxkzSOP3i4_NpxE8ELyNNRhQ", "_blank");
   };
 
   return (
