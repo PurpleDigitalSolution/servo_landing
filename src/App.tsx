@@ -2,6 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Root from "./layout/Root"
 import Landing from "./Pages/Landing"
 import Download from "./Pages/Download"
+import PrivacyPolicy from "./Pages/PrivacyPolicy"
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root/>}>
         <Route index element={<Landing/>}/>
+        <Route path="/privacy" element={<PrivacyPolicy/>}/>
         <Route path="/download" element={<Download/>}/>
       </Route>
     )
