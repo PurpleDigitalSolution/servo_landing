@@ -5,7 +5,7 @@ import DownloadButton from "../components/DownloadButton";
 
 const DownloadPage = () => {
   const handleDownloadClick = () => {
-    window.open("https://mega.nz/file/akpxlKxA#34KmwQlWTWfEC99k7WfFxkzSOP3i4_NpxE8ELyNNRhQ", "_blank");
+    window.open("https://mega.nz/file/jko1xKxI#_0KVfJxxGsq6zjjK8Cbsyy2zBBjz5dn68oCrmA5yFAg", "_blank");
   };
 
   return (
@@ -65,7 +65,7 @@ const DownloadPage = () => {
               <span>Android APK - Direct Download</span>
             </div>
             <div className="flex items-center gap-2 text-xs opacity-70">
-              <span>Version 1.0.0</span>
+              <span>Version 1.0.3</span>
               <span className="w-1 h-1 rounded-full bg-text-secondary" />
               <span>Requires Android 7.0+</span>
             </div>
